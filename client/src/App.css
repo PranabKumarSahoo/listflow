@@ -14,8 +14,9 @@
 }
 
 body {
-  background: rgb(40, 0, 82);
-  background: radial-gradient(circle, rgba(40, 0, 82, 1) 0%, rgba(0, 0, 0, 1) 58%);
+  background-color: var(--body);
+  /* background: rgb(40, 0, 82);
+  background: radial-gradient(circle, rgba(40, 0, 82, 1) 0%, rgba(0, 0, 0, 1) 58%); */
 }
 
 ::-webkit-scrollbar {
@@ -23,7 +24,8 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: black;
+  background-color: transparent;
+  /* background-color: black; */
 }
 
 ::-webkit-scrollbar-thumb {
