@@ -1,12 +1,30 @@
 import React from 'react';
 import './Button.css';
 
-const Button = ({ btnText, btnTextWeight, btnTextSpacing, btnBgColor, btnHoverShadow, btnTextColor, btnBorder, btnOutline, btnPadding, btnBorderRadius, btnTransition }) => {
+const Button = (
+    {
+        onClick,
+        icon,
+        btnText,
+        btnTextSize,
+        btnTextWeight,
+        btnTextSpacing,
+        btnBgColor,
+        btnHoverShadow,
+        btnTextColor,
+        btnBorder,
+        btnOutline,
+        btnPadding,
+        btnBorderRadius,
+        btnTransition
+    }
+) => {
 
     const btnStyle = {
         backgroundColor: btnBgColor,
         color: btnTextColor,
         fontWeight: btnTextWeight,
+        fontSize: btnTextSize,
         letterSpacing: btnTextSpacing,
         border: btnBorder,
         borderRadius: btnBorderRadius,
@@ -17,7 +35,12 @@ const Button = ({ btnText, btnTextWeight, btnTextSpacing, btnBgColor, btnHoverSh
     };
 
     return (
-        <button style={btnStyle} className='btnStyle'>
+        <button
+            style={btnStyle}
+            className='btnStyle'
+            onClick={onClick}
+        >
+            {icon && <span className="icon">{icon}</span>}
             {btnText}
         </button>
     )

@@ -30,13 +30,13 @@
 
 .social-links a {
     text-decoration: none;
-    color: #908D88;
+    color: #7c7c7c;
     font-size: 0.8rem;
     transition: .3s;
 }
 
 .social-links a:hover {
-    color: #c3bdb6;
+    color: #d7d7d7;
 }
 
 @media only screen and (max-width: 600px) {
