@@ -19,6 +19,6 @@ app.use('/api/v1', auth);
 // setting up a middleware function for the todo list
 app.use('/api/v2', list);
 
-app.listen(3000, () => {
+app.listen(8000, () => {
     console.log("Server Started!!!");
 });
