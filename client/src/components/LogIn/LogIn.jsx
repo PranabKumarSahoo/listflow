@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LogIn.css';
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import Button from '../Button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store';
 
 const LogIn = () => {
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const [inputs, setInputs] = useState({
+        email: '',
+        username: '',
+        password: ''
+    });
+
+    const loginHandleChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({ ...inputs, [name]: value });
+    }
+
+    const loginSubmit = async (e) => {
+        e.preventDefault();
+
+        await axios.post('http://localhost:8000/api/v1/login', inputs)
+            .then((res) => {
+                sessionStorage.setItem("id", res.data.others._id);
+                dispatch(authActions.login());
+                navigate('/lists');
+            });
+    }
+
     return (
         <div className='log-in'>
             <div className='container text-white text-center'>
@@ -17,11 +47,23 @@ const LogIn = () => {
                         <div className='input-group'>
                             <div className='log-in-input'>
                                 <MdEmail className="react-icons" />
-                                <input type="email" placeholder='Email' />
+                                <input
+                                    type='email'
+                                    name='email'
+                                    placeholder='Email'
+                                    value={inputs.email}
+                                    onChange={loginHandleChange}
+                                />
                             </div>
                             <div className='log-in-input'>
                                 <FaLock className="react-icons" />
-                                <input type="password" placeholder='Password' />
+                                <input
+                                    type='password'
+                                    name='password'
+                                    placeholder='Password'
+                                    value={inputs.password}
+                                    onChange={loginHandleChange}
+                                />
                             </div>
                         </div>
                         <div className='loginBtn'>
@@ -38,6 +80,7 @@ const LogIn = () => {
                                     btnBorderRadius="50px"
                                     btnHoverShadow="0 20px 60px rgba(0, 0, 0, 0.4)"
                                     btnTransition=".3s"
+                                    onClick={loginSubmit}
                                 />
                             </Link>
                         </div>
