@@ -13,12 +13,12 @@ router.post('/register', async (req, res) => {
         // check if email already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "User already exists!!" });
+            return res.status(200).json({ message: "User already exists!!" });
         }
 
         // create new user
         const user = new User({ email, username, password: hashPass });
-        await user.save().then(() => res.status(200).json({ user: user }));
+        await user.save().then(() => res.status(200).json({ message: "SignUp Successfull." }));
 
     } catch (error) {
         // console.log(error);
@@ -27,12 +27,12 @@ router.post('/register', async (req, res) => {
 });
 
 // Sign-In API
-router.post('/signin', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         // check if email already exists
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
-            return res.status(400).json({ message: "Please Sign-Up First!!" });
+            return res.status(200).json({ message: "Please Sign-Up First!!" });
         }
 
         // check if password is match or not with user's password from database
@@ -43,7 +43,7 @@ router.post('/signin', async (req, res) => {
         
         // check if password is correct or not
         if (!isPasswordCorrect) {
-            return res.status(400).json({ message: "Password is not correct!!" });
+            return res.status(200).json({ message: "Password is not correct!!" });
         }
 
         /* 
