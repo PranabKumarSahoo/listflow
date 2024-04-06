@@ -3,10 +3,13 @@ import './SignUp.css';
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const SignUp = () => {
+
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
         email: '',
@@ -19,15 +22,23 @@ const SignUp = () => {
         setInputs({ ...inputs, [name]: value });
     }
 
-    const signupSubmit = (e) => {
+    const signupSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(inputs);
-        setInputs({
-            email: '',
-            username: '',
-            password: ''
-        });
+        await axios.post('http://localhost:8000/api/v1/register', inputs)
+            .then((res) => {
+                setInputs({
+                    email: '',
+                    username: '',
+                    password: ''
+                });
+                if (res.data.message === "User already exists!!") {
+                    alert(res.data.message);
+                } else {
+                    alert(res.data.message);
+                    navigate('/login');
+                }
+            });
     }
 
     return (
