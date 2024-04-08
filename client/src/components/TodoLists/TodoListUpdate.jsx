@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button/Button';
 
-const TodoListUpdate = ({ closeModal }) => {
+const TodoListUpdate = ({ closeEditModal }) => {
     return (
         <>
             <div className='todo-list-update d-flex flex-column justify-content-center align-items-center gap-5'>
@@ -46,7 +46,7 @@ const TodoListUpdate = ({ closeModal }) => {
                         btnBorderRadius="50px"
                         btnHoverShadow="0 50px 50px rgba(0, 0, 0, 0.4)"
                         btnTransition=".3s"
-                        onClick={closeModal}
+                        onClick={closeEditModal}
                     />
                 </div>
             </div>

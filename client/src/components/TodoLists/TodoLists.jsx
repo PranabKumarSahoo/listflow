@@ -78,11 +78,11 @@ const TodoLists = () => {
         });
     }
 
-    const displayModal = () => {
+    const displayEditModal = () => {
         setShowModal(true);
     }
 
-    const closeModal = () => {
+    const closeEditModal = () => {
         setShowModal(false);
     }
 
@@ -149,7 +149,7 @@ const TodoLists = () => {
                                             description={item.description}
                                             taskDate={new Date()}
                                             deleteTaskId={deleteTask}
-                                            displayModal={displayModal}
+                                            displayEditModal={displayEditModal}
                                         />
                                     </div>
                                 ))
@@ -162,7 +162,7 @@ const TodoLists = () => {
             <div className={`list-update ${showModal ? 'show' : ''}`}>
                 <div className="container">
                     <TodoListUpdate
-                        closeModal={closeModal}
+                        closeEditModal={closeEditModal}
                     />
                 </div>
             </div>

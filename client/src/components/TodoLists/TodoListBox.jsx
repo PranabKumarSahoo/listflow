@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './TodoLists.css';
 import { FaEdit, FaTrash, FaEyeSlash, FaEye } from 'react-icons/fa';
 
-const TodoListBox = ({ id, title, description, deleteTaskId, displayModal }) => {
+const TodoListBox = ({ id, title, description, deleteTaskId, displayEditModal }) => {
     const [showDetails, setShowDetails] = useState(false);
 
     const toggleDetails = () => {
@@ -26,7 +26,7 @@ const TodoListBox = ({ id, title, description, deleteTaskId, displayModal }) => 
                         <div className='todo-list-footer'>
                             <button
                                 onClick={() => {
-                                    displayModal();
+                                    displayEditModal();
                                 }}
                             >
                                 <FaEdit
