@@ -4,6 +4,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import Button from '../Button/Button';
 import TodoListBox from './TodoListBox';
 import TodoListUpdate from './TodoListUpdate';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+let id = sessionStorage.getItem('id');
 
 const TodoLists = () => {
 
@@ -11,12 +15,18 @@ const TodoLists = () => {
     const [array, setArray] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
+    const isLoggedIn = useSelector((state) => state.isLoggedIn);
+
+    if (isLoggedIn) {
+        console.log(id);
+    }
+
     const taskHandleChange = (e) => {
         const { name, value } = e.target;
         setInputs({ ...inputs, [name]: value });
     }
 
-    const taskSubmitClick = () => {
+    const taskSubmitClick = async () => {
         if (inputs.title === "" || inputs.description === "") {
             toast.error("Title and Description can't be empty!!", {
                 icon: '⚠️',
@@ -32,32 +42,44 @@ const TodoLists = () => {
                 }
             });
         } else {
-            setArray([...array, inputs]);
-            setInputs({ title: '', description: '' });
-            toast.success("Task added successfully!!", {
-                style: {
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    color: '#82dd55',
-                    background: 'rgb(51, 51, 51)',
-                    boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
-                    border: '1px solid rgba(121, 121, 121, 0.3)',
-                    borderRadius: '10px',
-                    padding: '15px 20px',
-                }
-            });
-            toast.error("Task Not Saved! Please Sign-Up First.", {
-                style: {
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    color: '#ff3737',
-                    background: 'rgb(51, 51, 51)',
-                    boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
-                    border: '1px solid rgba(121, 121, 121, 0.3)',
-                    borderRadius: '10px',
-                    padding: '15px 20px',
-                }
-            });
+            if (id) {
+                await axios.post('http://localhost:8000/api/v2/addTask', {
+                    title: inputs.title,
+                    description: inputs.description,
+                    id: id
+                })
+                    .then((res) => {
+                        console.log(res);
+                    });
+                setArray([...array, inputs]);
+                setInputs({ title: '', description: '' });
+                toast.success("Task added successfully!!", {
+                    style: {
+                        fontSize: '0.8rem',
+                        fontWeight: '500',
+                        color: '#82dd55',
+                        background: 'rgb(51, 51, 51)',
+                        boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
+                        border: '1px solid rgba(121, 121, 121, 0.3)',
+                        borderRadius: '10px',
+                        padding: '15px 20px',
+                    }
+                });
+            } else {
+                setInputs({ title: '', description: '' });
+                toast.error("Task Not Saved! Please Sign-Up First.", {
+                    style: {
+                        fontSize: '0.8rem',
+                        fontWeight: '500',
+                        color: '#ff3737',
+                        background: 'rgb(51, 51, 51)',
+                        boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
+                        border: '1px solid rgba(121, 121, 121, 0.3)',
+                        borderRadius: '10px',
+                        padding: '15px 20px',
+                    }
+                });
+            }
         }
     }
 
