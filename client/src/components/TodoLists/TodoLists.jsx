@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TodoLists.css';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../Button/Button';
 import TodoListBox from './TodoListBox';
 import TodoListUpdate from './TodoListUpdate';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 let id = sessionStorage.getItem('id');
@@ -15,11 +15,11 @@ const TodoLists = () => {
     const [array, setArray] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
-    const isLoggedIn = useSelector((state) => state.isLoggedIn);
+    // const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-    if (isLoggedIn) {
-        console.log(id);
-    }
+    // if (isLoggedIn) {
+    //     console.log(id);
+    // }
 
     const taskHandleChange = (e) => {
         const { name, value } = e.target;
@@ -83,21 +83,39 @@ const TodoLists = () => {
         }
     }
 
-    const deleteTask = (id) => {
-        array.splice(id, 1);
-        setArray([...array]);
-        toast.success("Task deleted successfully!!", {
-            style: {
-                fontSize: '0.8rem',
-                fontWeight: '500',
-                color: '#00b000',
-                background: 'rgb(51, 51, 51)',
-                boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
-                border: '1px solid rgba(121, 121, 121, 0.3)',
-                borderRadius: '10px',
-                padding: '15px 20px',
-            }
-        });
+    const deleteTask = async (taskId) => {
+        if (id) {
+            await axios.delete(`http://localhost:8000/api/v2/deleteTask/${taskId}`, {
+                data: { id: id }
+            })
+                .then(() => {
+                    toast.success("Task deleted successfully!!", {
+                        style: {
+                            fontSize: '0.8rem',
+                            fontWeight: '500',
+                            color: '#00b000',
+                            background: 'rgb(51, 51, 51)',
+                            boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
+                            border: '1px solid rgba(121, 121, 121, 0.3)',
+                            borderRadius: '10px',
+                            padding: '15px 20px',
+                        }
+                    });
+                });
+        } else {
+            toast.error("Task Not Saved! Please Sign-Up First.", {
+                style: {
+                    fontSize: '0.8rem',
+                    fontWeight: '500',
+                    color: '#ff3737',
+                    background: 'rgb(51, 51, 51)',
+                    boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
+                    border: '1px solid rgba(121, 121, 121, 0.3)',
+                    borderRadius: '10px',
+                    padding: '15px 20px',
+                }
+            });
+        }
     }
 
     const displayEditModal = () => {
@@ -107,6 +125,32 @@ const TodoLists = () => {
     const closeEditModal = () => {
         setShowModal(false);
     }
+
+    useEffect(() => {
+        if (id) {
+            const fetch = async () => {
+                await axios.get(`http://localhost:8000/api/v2/getTask/${id}`)
+                    .then((res) => {
+                        setArray(res.data.list);
+                        // console.log(new Date(res.data.list[0].createdAt).toISOString().split('T')[0]);
+                    })
+            }
+            fetch();
+        } else {
+            toast.error("Task Not Saved! Please Sign-Up First.", {
+                style: {
+                    fontSize: '0.8rem',
+                    fontWeight: '500',
+                    color: '#ff3737',
+                    background: 'rgb(51, 51, 51)',
+                    boxShadow: '0 20px 20px rgba(0, 0, 0, 0.5)',
+                    border: '1px solid rgba(121, 121, 121, 0.3)',
+                    borderRadius: '10px',
+                    padding: '15px 20px',
+                }
+            });
+        }
+    }, [taskSubmitClick]);
 
     return (
         <>
@@ -166,10 +210,10 @@ const TodoLists = () => {
                                         className='col-lg-3 my-2 d-flex justify-content-center align-items-center gap-3'
                                     >
                                         <TodoListBox
-                                            id={index}
+                                            id={item._id}
                                             title={item.title}
-                                            description={item.description}
-                                            taskDate={new Date()}
+                                            body={item.body}
+                                            taskDate={new Date(item.createdAt)}
                                             deleteTaskId={deleteTask}
                                             displayEditModal={displayEditModal}
                                         />
