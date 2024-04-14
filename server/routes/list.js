@@ -5,12 +5,12 @@ const List = require('../model/list');
 // Create Task API
 router.post('/addTask', async (req, res) => {
     try {
-        const { title, body, id } = req.body;
+        const { title, description, id } = req.body;
 
         const existingUser = await User.findById(id);
 
         if (existingUser) {
-            const list = new List({ title, body, user: existingUser });
+            const list = new List({ title, body: description, user: existingUser });
             await list.save().then(() => res.status(200).json({ list }));
             existingUser.list.push(list);
             existingUser.save();
@@ -43,10 +43,10 @@ router.put('/updateTask/:id', async (req, res) => {
 // Delete Task API
 router.delete('/deleteTask/:id', async (req, res) => {
     try {
-        const { email } = req.body;
+        const { id } = req.body;
 
-        const existingUser = await User.findOneAndUpdate(
-            { email: email },
+        const existingUser = await User.findByIdAndUpdate(
+            id,
             { $pull: { list: req.params.id } }
         );
 
