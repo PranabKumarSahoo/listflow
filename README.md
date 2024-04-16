@@ -89,16 +89,16 @@ ListFlow is a simple web application for creating and managing to-do lists. It a
 ## Technologies Used
 
 - **Frontend**:
-  - React.js: JavaScript library for building user interfaces.
-  - React Router: Declarative routing for React applications.
-  - Bootstrap: Frontend framework for responsive design.
-  - React Icons: Icon library for React applications.
-  - Axios: Promise-based HTTP client for making requests to the backend.
+  - React.js: For user interfaces.
+  - React Router: For Routing in applications.
+  - Bootstrap: For responsive design.
+  - React Icons: Icon library.
+  - Axios: For making requests to the backend.
 
 - **Backend**:
-  - Node.js: JavaScript runtime for server-side logic.
-  - Express.js: Web framework for building APIs and handling HTTP requests.
-  - MongoDB: NoSQL database for storing user data and task information.
+  - Node.js: For server-side logic.
+  - Express.js: For building APIs and handling HTTP requests.
+  - MongoDB: For storing user data and task information.
   - Mongoose: MongoDB object modeling for Node.js applications.
   - bcrypt.js: Library for hashing passwords securely.
 
