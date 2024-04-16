@@ -76,7 +76,7 @@ ListFlow is a simple web application for creating and managing to-do lists. It a
 - **Response**:
     - `message` (string): Success message indicating the task was deleted.
 
-### Get All Tasks API
+### Get Tasks API
 
 - **Endpoint**: `/api/v2/getTask/:id`
 - **Method**: `GET`
