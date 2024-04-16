@@ -13,15 +13,7 @@ ListFlow is a simple web application for creating and managing to-do lists. It a
 
 ![Home Page](https://i.ibb.co/wB4XCdf/screenshot-1.png)
 
-![SignUp Page](https://i.ibb.co/T8Q32vm/screenshot-2.png)
-
-![LogIn Page](https://i.ibb.co/Rb4LJXT/screenshot-3.png)
-
-![About Us Page](https://i.ibb.co/qn7xkYB/screenshot-4.png)
-
 ![Task List Page](https://i.ibb.co/qn1R4xc/screenshot-6.png)
-
-![Task List Update Page](https://i.ibb.co/mTBSJ2p/screenshot-7.png)
 
 ## Backend API Documentation
 
